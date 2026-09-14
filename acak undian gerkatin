@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PTI 2026 Lucky Draw</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f2f2f2;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+    }
+
+    .logos {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 20px;
+    }
+
+    .logos img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin: 20px 0;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      font-size: 25px;
+      font-weight: bold;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin: 30px 0;
+      font-size: 45px;
+      font-weight: bold;
+      min-height: 60px;
+    }
+
+    li {
+      text-align: left;
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- LOGO -->
+  <div class="logos">
+    <img src="logo-gerkatin.png" alt="GERKATIN">
+    <img src="logo-pti.png" alt="PTI 2026">
+  </div>
+
+  <h1>INTERNATIONAL DEAF WEEK 2026</h1>
+  <h2>LUCKY DRAW</h2>
+
+  <!-- PARTICIPANT LIST -->
+  <textarea id="participants"
+    placeholder="Enter participant names, one name per line"></textarea>
+
+  <!-- RANDOM DRAW BUTTON -->
+  <button onclick="drawWinner()">
+    🎉 DRAW WINNER
+  </button>
+
+  <!-- WINNER -->
+  <div id="result">
+    ?
+  </div>
+
+  <h3>WINNERS</h3>
+
+  <ol id="winnerList"></ol>
+
+</div>
+
+<script>
+
+let winners = [];
+
+function drawWinner() {
+
+  let participants = document
+    .getElementById("participants")
+    .value
+    .split("\n")
+    .map(name => name.trim())
+    .filter(name => name !== "");
+
+  // Remove people who already won
+  participants = participants.filter(
+    name => !winners.includes(name)
+  );
+
+  if (participants.length === 0) {
+    document.getElementById("result").innerText =
+      "NO PARTICIPANTS";
+    return;
+  }
+
+  // RANDOM
+  let randomIndex =
+    Math.floor(Math.random() * participants.length);
+
+  let winner = participants[randomIndex];
+
+  // Save winner
+  winners.push(winner);
+
+  // Show winner
+  document.getElementById("result").innerText =
+    winner;
+
+  // Add winner to list
+  let item = document.createElement("li");
+  item.innerText = winner;
+
+  document
+    .getElementById("winnerList")
+    .appendChild(item);
+}
+
+</script>
+
+</body>
+</html>
